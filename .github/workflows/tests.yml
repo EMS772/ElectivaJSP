@@ -1,0 +1,25 @@
+name: Run Unit Tests  # Nombre del workflow
+
+on:  # Eventos que activan el workflow
+  push:  # Se ejecuta al hacer un push
+    branches: [main, dev]  # Solo en las ramas main y dev
+  pull_request:  # Se ejecuta al crear un pull request
+    branches: [main, dev]  # Solo hacia main y dev
+
+jobs:  # Trabajos que ejecutará el workflow
+  test:  # Nombre del trabajo (puede ser cualquiera)
+    runs-on: ubuntu-latest  # Sistema operativo que usará GitHub para ejecutar el workflow
+
+    steps:  # Pasos que se ejecutarán en el trabajo
+    - uses: actions/checkout@v4  # Descarga el código del repositorio
+      
+    - name: Setup Node  # Configura Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20  # Versión de Node.js a usar
+    
+    - name: Install dependencies  # Instala las dependencias
+      run: npm install
+    
+    - name: Run tests  # Ejecuta las pruebas
+      run: npm test
